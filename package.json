@@ -1,6 +1,6 @@
 {
   "name": "slackerr",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Send errors to the slack channel",
   "main": "index.js",
   "scripts": {
