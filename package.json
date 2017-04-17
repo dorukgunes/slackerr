@@ -1,0 +1,19 @@
+{
+  "name": "slackerr",
+  "version": "0.0.1",
+  "description": "Send errors to the slack channel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "slack",
+    "error"
+  ],
+  "author": "Doruk Güneş <doruk.gunes@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "slack-node": "^0.1.8"
+  }
+}
