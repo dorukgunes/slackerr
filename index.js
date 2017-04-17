@@ -1,7 +1,7 @@
 const Slack = require('slack-node')
 const _ = require('lodash')
 
-class Slackerr {
+module.exports = class Slackerr {
   constructor (webhookUri, options = {}) {
     const slack = new Slack()
     slack.setWebhook(webhookUri)
@@ -54,9 +54,6 @@ class Slackerr {
     return fields
   }
 }
-
-module.exports = Slackerr()
-
 
 
 
