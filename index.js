@@ -55,6 +55,8 @@ class Slackerr {
   }
 }
 
-module.exports = new Slackerr()
+module.exports = Slackerr()
+
+
 
 
