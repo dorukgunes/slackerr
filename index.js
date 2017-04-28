@@ -1,3 +1,4 @@
+"use strict"
 const Slack = require('slack-node')
 const _ = require('lodash')
 
