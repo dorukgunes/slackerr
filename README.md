@@ -1,9 +1,5 @@
 
-Slackerr
-
-=========
-
-  
+## Slackerr
 
 A small library that sends error to your slack channel
 
@@ -15,7 +11,6 @@ A small library that sends error to your slack channel
 
 `npm install slackerr --save`
 
-  
 
 ## Usage
 
@@ -28,4 +23,8 @@ A small library that sends error to your slack channel
 	    slackerr.report(err) // without extra detail
 	    slackerr.report(err, {username: 'test'}) // with detail
     }
+**Example:**
+      ![enter image descriasdasption here](http://i63.tinypic.com/10f10nq.png)
+
+
         
