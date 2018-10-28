@@ -1,11 +1,14 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Slack = require('slack-node');
 var _ = require('lodash');
+var availableSlackDefaultColorNames = ['good', 'warning', 'danger'];
 
 module.exports = function () {
   function Slackerr(webhookUri) {
@@ -33,7 +36,6 @@ module.exports = function () {
           reject(error);
           return callback(error);
         }
-
         _this.slack.webhook({
           channel: _this.options.channel,
           username: _this.options.username,
@@ -42,7 +44,7 @@ module.exports = function () {
             title: err.name + ': ' + err.message,
             text: '```' + err.stack + '```',
             mrkdwn_in: ['text'],
-            color: err.status < 500 ? 'warning' : 'danger',
+            color: _this._isValidColor(_this.options.color) ? _this.options.color : err.status < 500 ? 'warning' : 'danger',
             ts: parseInt(Date.now() / 1000),
             fields: _this._generateFields(fieldOptions)
           }]
@@ -63,13 +65,33 @@ module.exports = function () {
       var fields = [];
 
       for (var key in fieldOptions) {
-        fields.push({
-          title: _.startCase(key),
-          value: fieldOptions[key] || 'None',
-          short: true
-        });
+        var fieldObj = {
+          title: _.startCase(key)
+        };
+        if (_typeof(fieldOptions[key]) === "object") {
+          fieldObj.value = fieldOptions[key]['value'];
+          fieldObj.short = fieldOptions[key]['short'];
+        } else {
+          fieldObj.value = fieldOptions[key];
+        }
+
+        // If empty set it true
+        fieldObj.short = fieldObj.short == null ? true : fieldObj.short;
+        fields.push(fieldObj);
       }
+
       return fields;
+    }
+  }, {
+    key: '_isHexColor',
+    value: function _isHexColor(color) {
+      return (/^#[0-9A-F]{6}$/i.test(color)
+      );
+    }
+  }, {
+    key: '_isValidColor',
+    value: function _isValidColor(color) {
+      return color && (this._isHexColor(color) || availableSlackDefaultColorNames.indexOf(color) !== -1);
     }
   }]);
 
